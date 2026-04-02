@@ -1,0 +1,50 @@
+#!/bin/bash
+
+firstname='Rafał'
+surname='Mazur'
+email='rmazur@student.agh.edu.pl'
+bookid='430570'
+sign_dir=$(pwd)
+
+if [[ $# -eq 0 ]]; then
+	:	
+elif [[ $# -eq 1 ]]; then
+	sign_dir=$(realpath $1)
+elif [[ $# -eq 4 ]]; then
+	firstname=$1
+	surname=$2
+	email=$3
+	bookid=$4
+	sign_dir=$(pwd)
+elif [[ $# -eq 5 ]]; then
+	firstname=$1
+	surname=$2
+	email=$3
+	bookid=$4
+	sign_dir=$(realpath $5)
+else
+	echo "Wrong number of arguments"
+	exit 1
+fi
+
+
+if [[ ! -d $sign_dir ]]; then
+	echo "Directory does not exist!"
+	exit 2
+fi
+
+
+name="$firstname $surname"
+
+for file in $sign_dir/*; do
+	if [[ -f $file ]] && [[ "$file" =~ (cpp|h|hpp)$ ]]; then
+		file_path=$(realpath $file)
+		sed -i "1!b; /^\/\/\/ @author/!i\/// @author $name" $file_path
+		if [[ $(basename $file) == main.cpp ]]; then
+			sed -i "s/FIRSTNAME *= *\"\"/FIRSTNAME = \"$firstname\"/g" $file_path
+			sed -i "s/SURNAME *= *\"\"/SURNAME = \"$surname\"/g" $file_path
+			sed -i "s/MAIL *= *\"\"/MAIL = \"$email\"/g" $file_path
+			sed -i "s/BOOK_ID *= *\"\"/BOOK_ID = \"$bookid\"/g" $file_path
+		fi
+	fi
+done
