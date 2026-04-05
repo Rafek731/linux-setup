@@ -118,4 +118,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
+export VISUAL=$(which nvim)
+export EDITOR=$(which nvim)
+
 fastfetch -c "examples/10.jsonc"
