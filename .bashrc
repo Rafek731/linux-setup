@@ -56,9 +56,15 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+parse_venv() {
+	if [[ -n "$VIRTUAL_ENV" ]]; then
+		echo " ($(basename "$VIRTUAL_ENV"))"
+	fi
+}
+
 if [ "$color_prompt" = yes ]; then
     #PS1='\[\e]0;\u@\h: \w\a\]\[\e[1;38;5;160m\]\W\[\e[0m\] \[\e[2m\]\$\[\e[0m\] '
-    PS1='\[\e[2m\]┌──\[\e[0m\] \[\e[1;38;5;136m\]\u@\h\[\e[0m\] \[\e[2m\]:\[\e[0m\] \[\e[1;38;5;160m\]\w\[\e[0m\]\n\[\e[2m\]└─ \$\[\e[0m\] '
+    PS1='\[\e[2m\]┌──\[\e[0m\]$(parse_venv) \[\e[1;38;5;136m\]\u@\h\[\e[0m\] \[\e[2m\]:\[\e[0m\] \[\e[1;38;5;160m\]\w\[\e[0m\]\n\[\e[2m\]└─ \$\[\e[0m\] '
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$'
@@ -118,7 +124,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Default text editor
 export VISUAL=$(which nvim)
 export EDITOR=$(which nvim)
+
+# Disable putting python venv name at the beggining of the prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 fastfetch -c "examples/10.jsonc"
