@@ -75,6 +75,7 @@ plugins=(
 	colored-man-pages 
 	colorize
 	zsh-autosuggestions
+	zsh-autocomplete
 )
 
 source $ZSH/oh-my-zsh.sh
