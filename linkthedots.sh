@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-dir=''
+files_dir=''
+dotlinkfile=''
 
-if [[ $# -eq 0 ]]; then
-	dir=($(pwd))
+if [ $# -eq 0 ]; then
+	files_dir=($(pwd))
 fi
 
-echo $dir
+while read 
