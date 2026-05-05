@@ -2,7 +2,7 @@
 export ZSH="$HOME/.oh-my-zsh"
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-ZSH_THEME="custom-gnzh"
+ZSH_THEME="gnzh"
 DISABLE_AUTO_TITLE="true"
 COMPLETION_WAITING_DOTS="true"
 CASE_SENSITIVE="true"
@@ -40,5 +40,3 @@ zstyle ':completion:*' completer _expand _complete _ignored
 alias ll="ls -lAFh"
 alias la="ls -AFh"
 alias l="ls -F"
-
-fastfetch -c "examples/10.jsonc"
